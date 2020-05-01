@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'rest_framework.authtoken',
+    'django_filters',
 ]
 
 REST_FRAMEWORK = {
@@ -52,6 +53,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+
+    'DEFAULT_PAGINATION_CLASS': 'rental.pagination.HeaderLimitOffsetPagination',
+    'PAGE_SIZE': 25,
+
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 }
 
 MIDDLEWARE = [
@@ -90,8 +96,13 @@ WSGI_APPLICATION = 'crud.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'crud',
+        'USER': 'admin',
+        'PASSWORD':'Private@123!',
+        'HOST': 'localhost',
+        'PORT': '',
+
     }
 }
 
@@ -133,3 +144,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
